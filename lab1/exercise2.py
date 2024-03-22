@@ -23,13 +23,13 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 # Create a graph from the adjacency matrix
-G = nx.Graph(data)
+G = nx.karate_club_graph()
 
 # Display the adjacency matrix
 print(nx.adjacency_matrix(G).todense())
 
 # Draw the network
-nx.draw(G, with_labels=True)
+nx.draw(G, with_labels=True, font_size=3, node_size=300)
 plt.show()
 
 # c) Calculates the degree centrality of each node and store them in an array vector
@@ -58,35 +58,38 @@ components = nx.connected_components(G)
 
 # Convert to a list so we can use it multiple times
 components = list(components)
+print(components)
 
 # Find the largest component
 largest_component = max(components, key=len)
-
 # Find the smallest component
 smallest_component = min(components, key=len)
 
-print("Largest component:", largest_component)
-print("Smallest component:", smallest_component)
+print("Largest component:", len(largest_component))
+print("Smallest component:", len(smallest_component))
 
 # f) Draw the degree distribution of this component (subgraph of d)).
+import collections
 
-# Create a subgraph using the nodes in the largest component
-largest_component_subgraph = G.subgraph(largest_component)
+# Count the frequency of each degree value
+degreeCount = collections.Counter(degrees) 
+deg, cnt = zip(*degreeCount.items()) # Unzip the degree and count values
 
-# Get the degrees of the nodes in the subgraph
-degrees = [degree for node, degree in largest_component_subgraph.degree()]
+fig, ax = plt.subplots()
+plt.bar(deg, cnt, width=0.80, color="b")
 
-# Plot a histogram of the degrees
-plt.hist(degrees, bins=range(min(degrees), max(degrees) + 2))
-plt.title('Degree Distribution of Largest Component')
-plt.xlabel('Degree')
-plt.ylabel('Frequency')
+plt.title("Degree Histogram")
+plt.ylabel("Count")
+plt.xlabel("Degree")
+ax.set_xticks([d for d in deg])
+ax.set_xticklabels(deg)
+
+# Draw the plot
 plt.show()
 
 # g) Use appropriate NetworkX functions to compute the diameter of the whole network and diameter of the largest component.
+diameter_network = nx.diameter(G)
+print("Diameter of the whole network", diameter_network)
 
-# Compute the diameter of the largest component
-largest_component_subgraph = G.subgraph(max(nx.connected_components(G), key=len))
-largest_component_diameter = nx.diameter(largest_component_subgraph)
-
-print("Diameter of the largest component:", largest_component_diameter)
+diameter_largest = nx.diameter(nx.subgraph(G, largest_component))
+print("Diameter of the largest component", diameter_largest)

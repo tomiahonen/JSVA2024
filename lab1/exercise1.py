@@ -40,7 +40,7 @@ for node in G.nodes:
             G.add_edge(node, edge)
 
 # Draw the graph with node labels
-nx.draw(G, with_labels=True, node_color='skyblue', node_size=1500)
+nx.draw(G, with_labels=True, node_color='skyblue', node_size=300)
 
 # Display the graph using matplotlib
 plt.show()
