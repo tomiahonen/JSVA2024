@@ -34,11 +34,13 @@ plt.show()
 degree_centrality_dict = nx.degree_centrality(G)
 degree_centrality_array = np.array(list(degree_centrality_dict.values()))
 highest_degree_node = max(degree_centrality_dict, key=degree_centrality_dict.get)
+print(degree_centrality_array)
 
 #eigenvector
 eigenvector_centrality_dict = nx.eigenvector_centrality(G)
 eigenvector_centrality_array = np.array(list(eigenvector_centrality_dict.values()))
 highest_eigenvector_node = max(eigenvector_centrality_dict, key=eigenvector_centrality_dict.get)
+print(eigenvector_centrality_array)
 
 #Katz centrality
 katz_centrality_dict = nx.katz_centrality(G)
@@ -113,6 +115,33 @@ plt.show()
 #closeness centrality and betweeness centrality
 
 closeness_centrality_dict = nx.closeness_centrality(G)
+closeness_centrality_array = np.array(list(closeness_centrality_dict.values()))
+highest_cc = max(closeness_centrality_dict, key=closeness_centrality_dict.get)
+
 
 
 betweenes_centrality_dict = nx.betweenness_centrality(G)
+betweenes_centrality_array = np.array(list(betweenes_centrality_dict.values()))
+highest_bc = max(betweenes_centrality_dict, key=betweenes_centrality_dict.get)
+
+#node_colors = ['blue' if ( node != highest_degree_node and node != highest_bc ) else 'red' for node in G.nodes()]
+color_map2=[]
+for node in G.nodes():
+    if node == highest_cc:
+        color_map2.append('maroon')
+    elif node == highest_bc:
+        color_map2.append('green')
+    else:
+        color_map2.append('blue')
+
+nx.draw(G, with_labels=True, font_size=8, node_size=300, node_color=color_map2)
+
+plt.show()
+
+#clustering
+clustering_dict = nx.clustering(G)
+
+
+#sets
+set = nx.is_bipartite(G)
+print(set)
