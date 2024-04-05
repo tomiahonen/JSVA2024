@@ -22,7 +22,8 @@ import matplotlib.pyplot as plt
 
 G=nx.read_edgelist('facebook_combined.txt', create_using=nx.Graph(),nodetype=int)
 
-#print(nx.info(g))
+#print(nx.info(g))'
+
 
 #sp=nx.spring_layout(g)
 
@@ -34,16 +35,39 @@ plt.show()
 degree_centrality_dict = nx.degree_centrality(G)
 degree_centrality_array = np.array(list(degree_centrality_dict.values()))
 highest_degree_node = max(degree_centrality_dict, key=degree_centrality_dict.get)
-print(degree_centrality_array)
+#print(degree_centrality_array)
 
 closeness_centrality_dict = nx.closeness_centrality(G)
 closeness_centrality_array = np.array(list(closeness_centrality_dict.values()))
 highest_cc = max(closeness_centrality_dict, key=closeness_centrality_dict.get)
-print(degree_centrality_dict)
+#print(degree_centrality_dict)
 
 betweenes_centrality_dict = nx.betweenness_centrality(G)
 betweenes_centrality_array = np.array(list(betweenes_centrality_dict.values()))
 highest_bc = max(betweenes_centrality_dict, key=betweenes_centrality_dict.get)
-print(betweenes_centrality_dict)
+#print(betweenes_centrality_dict)
 
 
+plt.figure(figsize=(8, 4))
+
+plt.subplot(2, 2, 1)
+plt.hist(degree_centrality_array, bins=10, color='skyblue', edgecolor='black')
+plt.title('Degree Centrality Histogram')
+plt.xlabel('Degree Centrality')
+plt.ylabel('Frequency')
+
+plt.subplot(2, 2, 2)
+plt.hist(closeness_centrality_array, bins=10, color='salmon', edgecolor='black')
+plt.title('Eigenvector Centrality Histogram')
+plt.xlabel('Eigenvector Centrality')
+plt.ylabel('Frequency')
+
+plt.subplot(2, 2, 3)
+plt.hist(betweenes_centrality_array, bins=10, color='green', edgecolor='black')
+plt.title('Katz Centrality Histogram')
+plt.xlabel('Katz Centrality')
+plt.ylabel('Frequency')
+
+
+plt.tight_layout()
+plt.show()

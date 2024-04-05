@@ -5,11 +5,13 @@ A)
    Write a program that 
    
   a) Displays the whole graph 
-  b) Displays the degree centrality, eigenvector centrality, Katz centrality, page rank centrality of each node of the network. Draw the network graph where the node with the highest centrality is highlighted (use different color for
+  b) Displays the degree centrality, eigenvector centrality, Katz centrality, page rank centrality of each node of the network. Draw the network graph where the node with the highest centrality is 
+  highlighted (use different color for
         each centrality type)
   c) Draws the distribution (histogram) for each centrality measure
   d) Repeat b) and c) when using closeness centrality, betweenness centrality 
-  e) Displays the local clustering coefficient of each node, and draws the corresponding distribution function. Then compare possible link between clustering coefficient values and some centrality measures when scrutinizing the values
+  e) Displays the local clustering coefficient of each node, and draws the corresponding distribution function. Then compare possible link between clustering coefficient values and some centrality 
+        measures when scrutinizing the values
      of clustering coefficient/centrality measures of individual nodes.
   f) Calculates the global clustering coefficient of the overall graph (or its largest connected componenty). 
   g) Identify smallest subgraph that has a global clustering coefficient close to the one of the whole graph.  
@@ -34,23 +36,25 @@ plt.show()
 degree_centrality_dict = nx.degree_centrality(G)
 degree_centrality_array = np.array(list(degree_centrality_dict.values()))
 highest_degree_node = max(degree_centrality_dict, key=degree_centrality_dict.get)
-print(degree_centrality_array)
+print(degree_centrality_dict)
 
 #eigenvector
 eigenvector_centrality_dict = nx.eigenvector_centrality(G)
 eigenvector_centrality_array = np.array(list(eigenvector_centrality_dict.values()))
 highest_eigenvector_node = max(eigenvector_centrality_dict, key=eigenvector_centrality_dict.get)
-print(eigenvector_centrality_array)
+print(degree_centrality_dict)
 
 #Katz centrality
 katz_centrality_dict = nx.katz_centrality(G)
 katz_centrality_array = np.array(list(katz_centrality_dict.values()))
 highest_katz_node = max(katz_centrality_dict, key=katz_centrality_dict.get)
+print(katz_centrality_dict)
 
 #Page rank centrality
 page_centrality_dict = nx.pagerank(G)
 page_centrality_array = np.array(list(page_centrality_dict.values()))
 highest_page_node = max(page_centrality_dict, key=page_centrality_dict.get)
+print(page_centrality_dict)
 
 #highlight 
 color_list=['green', 'blue', 'black', 'yellow']
@@ -117,12 +121,14 @@ plt.show()
 closeness_centrality_dict = nx.closeness_centrality(G)
 closeness_centrality_array = np.array(list(closeness_centrality_dict.values()))
 highest_cc = max(closeness_centrality_dict, key=closeness_centrality_dict.get)
+print(closeness_centrality_dict)
 
 
 
 betweenes_centrality_dict = nx.betweenness_centrality(G)
 betweenes_centrality_array = np.array(list(betweenes_centrality_dict.values()))
 highest_bc = max(betweenes_centrality_dict, key=betweenes_centrality_dict.get)
+print(betweenes_centrality_dict)
 
 #node_colors = ['blue' if ( node != highest_degree_node and node != highest_bc ) else 'red' for node in G.nodes()]
 color_map2=[]
@@ -140,7 +146,19 @@ plt.show()
 
 #clustering
 clustering_dict = nx.clustering(G)
+clustering_array = np.array(list(clustering_dict.values()))
 
+plt.hist(clustering_array, bins=10, color='orange', edgecolor='black')
+plt.title('Clustering')
+plt.xlabel('Clustering')
+plt.ylabel('Frequency')
+
+plt.show()
+
+#f 
+
+global_clustering = nx.transitivity(G)
+print("Global clustering: " , global_clustering)
 
 #sets
 set = nx.is_bipartite(G)
